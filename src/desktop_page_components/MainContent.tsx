@@ -25,12 +25,9 @@ const Product = styled.div`
   }
 `;
 
-const Details = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
-`;
+interface MainContentProps {
+  searchQuery: string;
+}
 
 interface Product {
   category: string;
@@ -42,22 +39,31 @@ interface Product {
   title: string;
 }
 
-export default function MainContent() {
-  const [item, setItem] = useState<Product[]>([]);
+export default function MainContent({ searchQuery }: MainContentProps) {
+  const [items, setItems] = useState<Product[]>([]);
 
   useEffect(() => {
     axios
       .get("https://fakestoreapi.com/products")
-      .then((res) => setItem(res.data));
+      .then((res) => setItems(res.data));
   }, []);
 
   return (
     <>
       <Main>
         <Container>
-          {item.map((product: Product) => (
-            <ProductInfo product={product} />
-          ))}
+          {items
+            .filter((el) => {
+              if (searchQuery.length > 0) {
+                return el.title
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase());
+              }
+              return true;
+            })
+            .map((product) => (
+              <ProductInfo key={product.id} product={product} />
+            ))}
         </Container>
       </Main>
     </>
