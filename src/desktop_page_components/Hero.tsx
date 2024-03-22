@@ -39,7 +39,14 @@ export default function Hero() {
         alt="well_dressed_woman"
       />
 
-      <span>
+      <span
+        onClick={() => {
+          window.scrollTo({
+            top: 900,
+            behavior: "smooth",
+          });
+        }}
+      >
         <h3>Explore</h3>&darr;
       </span>
     </HeroStyle>
