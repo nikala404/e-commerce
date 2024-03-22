@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const HeaderStyle = styled.header`
@@ -41,7 +42,19 @@ const SearchContainer = styled.div`
   }
 `;
 
-export default function Header() {
+export default function Header({
+  setSearchQuery,
+}: {
+  setSearchQuery: (value: string) => void;
+}) {
+  const [inputValue, setInputValue] = useState<string>("");
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+    setSearchQuery(value);
+  };
+
   return (
     <>
       <HeaderStyle>
@@ -65,7 +78,12 @@ export default function Header() {
               fill="#667479"
             />
           </svg>
-          <input type="text" placeholder="Search something here!" />
+          <input
+            type="text"
+            placeholder="Search something here!"
+            value={inputValue}
+            onChange={handleInput}
+          />
         </SearchContainer>
       </HeaderStyle>
     </>
