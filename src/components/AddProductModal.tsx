@@ -65,7 +65,7 @@ export default function AddProductModal({
   selectedProduct: Product | null;
   closeModal: any;
 }) {
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<number>(1);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(e.target.valueAsNumber);
@@ -83,7 +83,7 @@ export default function AddProductModal({
                   <svg
                     onClick={() => {
                       closeModal(false);
-                      setAmount(0);
+                      setAmount(1);
                     }}
                     xmlns="http://www.w3.org/2000/svg"
                     xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -130,7 +130,36 @@ export default function AddProductModal({
                   </span>
                 </div>
               </ProductAdditionPanel>
-              <button>Add To Cart</button>
+              <button
+                onClick={() => {
+                  const existingCartItems = JSON.parse(
+                    window.localStorage.getItem("cartItems") || "[]"
+                  );
+
+                  const existingItemIndex = existingCartItems.findIndex(
+                    (item: Product) => item.title === selectedProduct.title
+                  );
+
+                  if (existingItemIndex !== -1) {
+                    existingCartItems[existingItemIndex].amount += amount;
+                  } else {
+                    existingCartItems.push({
+                      img: selectedProduct.image,
+                      title: selectedProduct.title,
+                      price: selectedProduct.price,
+                      amount: amount,
+                      fullPrice: amount * Number(selectedProduct.price),
+                    });
+                  }
+
+                  window.localStorage.setItem(
+                    "cartItems",
+                    JSON.stringify(existingCartItems)
+                  );
+                }}
+              >
+                Add To Cart
+              </button>
             </Modal>
           </div>
         </Container>

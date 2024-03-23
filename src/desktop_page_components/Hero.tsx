@@ -3,6 +3,7 @@ import styled from "styled-components";
 const HeroStyle = styled.div`
   position: relative;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   margin-top: 3rem;
