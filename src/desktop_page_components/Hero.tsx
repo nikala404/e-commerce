@@ -8,7 +8,8 @@ const HeroStyle = styled.div`
   margin-top: 3rem;
 
   img {
-    height: 700px;
+    width: 100%;
+    max-width: 400px;
   }
   h1 {
     max-width: 790px;

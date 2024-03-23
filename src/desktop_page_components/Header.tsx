@@ -1,8 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
+import Cart from "../components/Cart";
 
 const HeaderStyle = styled.header`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
   font-family: "Red Rose", serif;
@@ -61,9 +63,8 @@ export default function Header({
         <nav>
           <li>Home</li>
           <li>Category</li>
-          <li>About</li>
-          <li>Contact</li>
         </nav>
+
         <SearchContainer>
           <svg
             width="20"
@@ -84,6 +85,7 @@ export default function Header({
             onChange={handleInput}
           />
         </SearchContainer>
+        <Cart />
       </HeaderStyle>
     </>
   );
