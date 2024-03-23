@@ -38,7 +38,6 @@ const SearchContainer = styled.div`
     position: absolute;
     top: 25%;
     left: 5%;
-    cursor: pointer;
   }
 `;
 

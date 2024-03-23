@@ -1,7 +1,8 @@
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ProductInfo from "../components/ProductInfo";
+import AddProductModal from "../components/AddProductModal";
 
 const Main = styled.main`
   display: flex;
@@ -10,6 +11,7 @@ const Main = styled.main`
   color: #003256;
   font-family: "Red Rose", serif;
 `;
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -17,19 +19,8 @@ const Container = styled.div`
   gap: 3rem;
   max-width: 1440px;
 `;
-const Product = styled.div`
-  max-width: 300px;
-  img {
-    width: 100%;
-    height: 300px;
-  }
-`;
 
-interface MainContentProps {
-  searchQuery: string;
-}
-
-interface Product {
+export interface Product {
   category: string;
   description: string;
   id: number;
@@ -39,8 +30,9 @@ interface Product {
   title: string;
 }
 
-export default function MainContent({ searchQuery }: MainContentProps) {
+export default function MainContent({ searchQuery }: { searchQuery: string }) {
   const [items, setItems] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     axios
@@ -62,8 +54,26 @@ export default function MainContent({ searchQuery }: MainContentProps) {
               return true;
             })
             .map((product) => (
-              <ProductInfo key={product.id} product={product} />
+              <ProductInfo
+                diplayActionsModal={true}
+                key={product.id}
+                product={product}
+                id={product.id.toString()}
+                selectedId={(id) => {
+                  const selected = items.find(
+                    (item) => item.id.toString() === id
+                  );
+                  if (selected) {
+                    setSelectedProduct(selected);
+                  }
+                }}
+              />
             ))}
+
+          <AddProductModal
+            selectedProduct={selectedProduct}
+            closeModal={() => setSelectedProduct(null)}
+          />
         </Container>
       </Main>
     </>
