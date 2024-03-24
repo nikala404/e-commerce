@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Cart from "../components/Cart";
+import { useNavigate } from "react-router-dom";
 
 const HeaderStyle = styled.header`
   display: flex;
@@ -56,13 +57,15 @@ export default function Header({
     setSearchQuery(value);
   };
 
+  const navigate = useNavigate();
+
   return (
     <>
       <HeaderStyle>
         <h1>Shop</h1>
         <nav>
-          <li>Home</li>
-          <li>Category</li>
+          <li onClick={() => navigate("/")}>Home</li>
+          <li onClick={() => navigate("/category")}>Category</li>
         </nav>
 
         <SearchContainer>
