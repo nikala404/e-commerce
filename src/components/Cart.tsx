@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
+import { toast } from "react-toastify";
 import styled from "styled-components";
+import { ProductContext } from "../App";
 
 const CartContainer = styled.div`
   display: flex;
@@ -47,7 +49,7 @@ const ProductTitle = styled.h4`
   text-overflow: ellipsis;
 `;
 
-interface CartProduct {
+export interface CartProduct {
   img: string;
   title: string;
   price: number;
@@ -55,19 +57,28 @@ interface CartProduct {
   amount: number;
 }
 
-export default function Cart() {
-  const [isClicked, setIsClicked] = useState<boolean>(false);
-  const [products, setProducts] = useState<CartProduct[]>([]);
+function Cart() {
+  const [isClicked, setIsClicked] = useState(false);
+  const { addedProducts, setAddedProducts } = useContext(ProductContext);
+
+  const removeFromCart = (title: string) => {
+    const updatedCartItems = addedProducts.filter(
+      (item) => item.title !== title
+    );
+    setAddedProducts(() => [...updatedCartItems]);
+    localStorage.setItem("cartProducts", JSON.stringify(updatedCartItems));
+    toast.success("Product Removed Succesfully");
+  };
+
+  const clearCart = () => {
+    setAddedProducts(() => []);
+    localStorage.removeItem("cartProducts");
+    toast.success("Cart Cleared Succesfully");
+  };
+
   const handleClick = () => {
     setIsClicked(!isClicked);
   };
-
-  useEffect(() => {
-    let i = JSON.parse(window.localStorage.getItem("cartItems") || "[]");
-    setProducts(i);
-  }, []);
-
-  console.log(products);
 
   return (
     <>
@@ -80,9 +91,7 @@ export default function Cart() {
         >
           Cart{" "}
           <svg
-            style={{
-              cursor: "pointer",
-            }}
+            style={{ cursor: "pointer" }}
             onClick={handleClick}
             fill="#433"
             version="1.1"
@@ -94,11 +103,11 @@ export default function Cart() {
             viewBox="0 0 902.86 902.86"
             xmlSpace="preserve"
           >
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
             <g
               id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             ></g>
             <g id="SVGRepo_iconCarrier">
               {" "}
@@ -112,23 +121,33 @@ export default function Cart() {
               </g>{" "}
             </g>
           </svg>
+          <span
+            style={{
+              background: "red",
+              color: "white",
+              width: "15px",
+              textAlign: "center",
+              borderRadius: "50%",
+            }}
+          >
+            {addedProducts.length}
+          </span>
         </span>
-        {isClicked ? (
+        {isClicked && addedProducts.length > 0 ? (
           <ProductContainer>
-            {products.map((item, index) => (
+            {addedProducts.map((item, index) => (
               <ProductHolder key={index}>
-                <span>
+                <span
+                  onClick={() => removeFromCart(item.title)}
+                  style={{ cursor: "pointer" }}
+                >
                   <svg
-                    style={{
-                      cursor: "pointer",
-                    }}
                     xmlns="http://www.w3.org/2000/svg"
                     xmlnsXlink="http://www.w3.org/1999/xlink"
                     fill="#ff0000"
                     height="10px"
                     width="14px"
                     version="1.1"
-                    id="Layer_1"
                     viewBox="0 0 492 492"
                     xmlSpace="preserve"
                   >
@@ -139,12 +158,8 @@ export default function Cart() {
                     </g>
                   </svg>
                 </span>
-                <img src={item.img} />
-                <div
-                  style={{
-                    maxWidth: "160px",
-                  }}
-                >
+                <img src={item.img} alt={item.title} />
+                <div style={{ maxWidth: "160px" }}>
                   <ProductTitle>{item.title}</ProductTitle>
                   <ProductTitle>
                     <span style={{ color: "lightgreen" }}>{item.price}$</span> x{" "}
@@ -156,18 +171,19 @@ export default function Cart() {
                 </div>
               </ProductHolder>
             ))}
-
-            <span
-              style={{
-                color: "red",
-                cursor: "pointer",
-              }}
-            >
-              Clear
-            </span>
+            {addedProducts.length > 0 ? (
+              <span
+                style={{ color: "red", cursor: "pointer" }}
+                onClick={clearCart}
+              >
+                Clear
+              </span>
+            ) : null}
           </ProductContainer>
         ) : null}
       </CartContainer>
     </>
   );
 }
+
+export default Cart;
