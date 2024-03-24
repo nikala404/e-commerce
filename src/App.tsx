@@ -19,7 +19,6 @@ const ProductProvider = ({ children }: { children: React.ReactNode }) => {
     return storedProducts ? JSON.parse(storedProducts) : [];
   });
 
-  // Sync addedProducts with localStorage on changes
   useEffect(() => {
     localStorage.setItem("cartProducts", JSON.stringify(addedProducts));
   }, [addedProducts]);
