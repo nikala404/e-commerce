@@ -37,7 +37,7 @@ export default function Hero() {
         classics for every occasion.
       </h1>
       <img
-        src="../public/01c2e10974288f6ce356472d402adfdb-removebg-preview.png"
+        src="../01c2e10974288f6ce356472d402adfdb-removebg-preview.png"
         alt="well_dressed_woman"
       />
 

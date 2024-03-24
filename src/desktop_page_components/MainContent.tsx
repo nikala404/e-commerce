@@ -21,6 +21,7 @@ const Container = styled.div`
 `;
 
 export interface Product {
+  amount: number;
   category: string;
   description: string;
   id: number;
