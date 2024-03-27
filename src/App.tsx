@@ -4,6 +4,7 @@ import DesktopPage from "./pages/DesktopPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CartProduct } from "./components/Cart";
+import Product from "./pages/Product";
 
 const ProductContext = createContext<{
   addedProducts: CartProduct[];
@@ -36,6 +37,7 @@ function App() {
       <ProductProvider>
         <Routes>
           <Route path="/" element={<DesktopPage />} />
+          <Route path="/product/:id" element={<Product />} />
         </Routes>
         <ToastContainer position="top-center" autoClose={1000} />
       </ProductProvider>

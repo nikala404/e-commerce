@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
           box-sizing:border-box;
       }
       body{
-          padding:20px 10px
+          padding: 0px 10px 20px 10px
        }
 
   `;
@@ -20,7 +20,7 @@ export default function DesktopPage() {
   return (
     <>
       <GlobalStyle />
-      <Header setSearchQuery={setSearchQuery} />
+      <Header isSearchVisible={true} setSearchQuery={setSearchQuery} />
       <Hero />
       <MainContent searchQuery={searchQuery} />
     </>

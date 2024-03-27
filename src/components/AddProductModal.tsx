@@ -8,6 +8,7 @@ import { ProductContext } from "../App";
 
 const Container = styled.div`
   position: fixed;
+  z-index: 2;
   top: 0;
   left: 0;
   width: 100%;
@@ -63,6 +64,15 @@ const AddToCartButton = styled.button`
   cursor: pointer;
 `;
 
+const Price = styled.div`
+  display: flex;
+  align-items: center;
+  span {
+    display: flex;
+    align-items: center;
+  }
+`;
+
 export default function AddProductModal({
   selectedProduct,
   closeModal,
@@ -111,7 +121,7 @@ export default function AddProductModal({
       {selectedProduct && closeModal && (
         <Container>
           <div>
-            <Modal>
+            <Modal id="modal_window">
               <ModalHeader>
                 <h2>Add Product</h2>
                 <span>
@@ -140,7 +150,7 @@ export default function AddProductModal({
               </ModalHeader>
 
               <ProductInfo
-                diplayActionsModal={false}
+                displayActionsModal={false}
                 product={selectedProduct}
               />
 
@@ -155,7 +165,7 @@ export default function AddProductModal({
                     max={1000}
                   />
                 </div>
-                <div>
+                <Price>
                   Price:{" "}
                   <span style={{ color: "lightgreen" }}>
                     {amount > 0
@@ -163,7 +173,7 @@ export default function AddProductModal({
                       : selectedProduct.price}
                     $
                   </span>
-                </div>
+                </Price>
               </ProductAdditionPanel>
               <AddToCartButton
                 onClick={() => {

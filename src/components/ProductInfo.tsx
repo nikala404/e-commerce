@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const Product = styled.div`
   max-width: 300px;
@@ -51,6 +52,7 @@ const ProductActions = styled.div`
   a {
     text-decoration: none;
     color: blue;
+    cursor: pointer;
   }
   span {
     display: flex;
@@ -74,7 +76,7 @@ const ProductActions = styled.div`
   }
 `;
 
-interface Product {
+export interface ProductInterface {
   category: string;
   description: string;
   id: number;
@@ -84,17 +86,19 @@ interface Product {
   title: string;
 }
 
+interface ProductInfoProps {
+  product: ProductInterface;
+  id?: string;
+  selectedId?: (id: string) => void;
+  displayActionsModal?: boolean;
+}
+
 export default function ProductInfo({
   product,
   id,
   selectedId,
-  diplayActionsModal,
-}: {
-  product: Product;
-  id?: string;
-  selectedId?: (id: string) => void;
-  diplayActionsModal: boolean;
-}) {
+  displayActionsModal,
+}: ProductInfoProps) {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const clickedButtonId = e.currentTarget.id;
 
@@ -103,15 +107,28 @@ export default function ProductInfo({
     }
   };
 
+  const navigate = useNavigate();
+
+  const handleNavigate = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    const idValue = e.currentTarget.id;
+    navigate(`/product/${idValue}`);
+  };
+
   return (
     <>
-      <Product key={product.id}>
+      <Product key={product.id} id="product_div">
         <img src={product.image} alt={product.title} loading="lazy" />
         <Details>
           <h2>{product.title}</h2>
           <h3>Category: {product.category}</h3>
-          <p>Description: {product.description}</p>
-          {diplayActionsModal ? (
+          <div>
+            <h3>Description</h3>
+            <p>{product.description}</p>
+          </div>
+
+          {displayActionsModal ? (
             <span>
               Price:
               <h4>${product.price}</h4>
@@ -122,9 +139,11 @@ export default function ProductInfo({
             Rating: {product.rating.rate}/5 (Based on {product.rating.count}{" "}
             reviews)
           </p>
-          {diplayActionsModal ? (
+          {displayActionsModal ? (
             <ProductActions>
-              <a href="#">See More</a>
+              <a onClick={handleNavigate} id={product.id.toString()}>
+                See More
+              </a>
               <span>
                 Add to Cart
                 <button id={id} onClick={handleClick}>

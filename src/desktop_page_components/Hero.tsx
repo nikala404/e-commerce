@@ -12,6 +12,7 @@ const HeroStyle = styled.div`
     width: 100%;
     max-width: 400px;
   }
+
   h1 {
     max-width: 790px;
     color: #003256;
@@ -44,7 +45,7 @@ export default function Hero() {
       <span
         onClick={() => {
           window.scrollTo({
-            top: 900,
+            top: 800,
             behavior: "smooth",
           });
         }}
