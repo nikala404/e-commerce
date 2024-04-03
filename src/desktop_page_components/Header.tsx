@@ -13,7 +13,7 @@ const HeaderStyle = styled.header`
   top: 0px;
   z-index: 1;
   background-color: white;
-  padding: 20px;
+  padding: 0px;
   nav {
     display: flex;
     list-style-type: none;
@@ -70,7 +70,7 @@ export default function Header({
 
   return (
     <>
-      <HeaderStyle>
+      <HeaderStyle id="header">
         <h1>Shop</h1>
         <nav>
           <li onClick={() => navigate("/")}>Home</li>

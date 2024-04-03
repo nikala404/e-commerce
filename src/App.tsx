@@ -3,8 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DesktopPage from "./pages/DesktopPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { CartProduct } from "./components/Cart";
+import { CartProduct } from "./components/CartProductDisplay";
 import Product from "./pages/Product";
+import FullCart from "./pages/FullCart";
 
 const ProductContext = createContext<{
   addedProducts: CartProduct[];
@@ -38,6 +39,7 @@ function App() {
         <Routes>
           <Route path="/" element={<DesktopPage />} />
           <Route path="/product/:id" element={<Product />} />
+          <Route path="/cart" element={<FullCart />} />
         </Routes>
         <ToastContainer position="top-center" autoClose={1000} />
       </ProductProvider>

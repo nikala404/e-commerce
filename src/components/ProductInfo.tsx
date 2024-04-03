@@ -5,7 +5,7 @@ const Product = styled.div`
   max-width: 300px;
   img {
     max-height: 328px;
-    min-height: 328px;
+    height: 328px;
     border-radius: 12px;
     width: 100%;
   }
@@ -65,6 +65,7 @@ const ProductActions = styled.div`
     color: lightgreen;
     font-size: 20px;
     cursor: pointer;
+    background: white;
     display: flex;
     align-items: center;
   }
@@ -120,7 +121,7 @@ export default function ProductInfo({
     <>
       <Product key={product.id} id="product_div">
         <img src={product.image} alt={product.title} loading="lazy" />
-        <Details>
+        <Details id="details">
           <h2>{product.title}</h2>
           <h3>Category: {product.category}</h3>
           <div>

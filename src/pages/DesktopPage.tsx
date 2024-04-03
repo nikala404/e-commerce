@@ -13,6 +13,9 @@ const GlobalStyle = createGlobalStyle`
       body{
           padding: 0px 10px 20px 10px
        }
+       #header{
+        padding:20px
+       }
 
   `;
 export default function DesktopPage() {

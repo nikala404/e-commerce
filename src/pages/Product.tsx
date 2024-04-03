@@ -3,9 +3,8 @@ import ProductInfo from "../components/ProductInfo";
 import Header from "../desktop_page_components/Header";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import styled from "styled-components";
+import { styled } from "styled-components";
 import AddProductModal from "../components/AddProductModal";
-
 import SimilarProductsSlider from "../components/SimilarProduct";
 
 const Main = styled.main`
@@ -120,7 +119,6 @@ export default function ProductPage() {
               selectedProduct={selectedProduct}
               closeModal={() => setSelectedProduct(null)}
             />
-            ;
           </>
         )}
       </Main>

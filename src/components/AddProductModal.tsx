@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ProductInfo from "./ProductInfo";
 import { Product } from "../desktop_page_components/MainContent";
 import { useState, useContext } from "react";
-import { CartProduct } from "./Cart";
+import { CartProduct } from "./CartProductDisplay";
 import { toast } from "react-toastify";
 import { ProductContext } from "../App";
 
@@ -99,15 +99,19 @@ export default function AddProductModal({
         existingCartItems[existingItemIndex].amount += amount;
       } else {
         existingCartItems.push({
-          img: selectedProduct.image,
+          image: selectedProduct.image,
           title: selectedProduct.title,
           price: selectedProduct.price,
           amount: amount,
           fullPrice: amount * Number(selectedProduct.price),
+          category: selectedProduct.category,
+          description: selectedProduct.description,
+          id: selectedProduct.id,
+          rating: selectedProduct.rating,
         });
       }
 
-      setAddedProducts(() => [...existingCartItems]);
+      setAddedProducts(existingCartItems);
       localStorage.setItem("cartProducts", JSON.stringify(existingCartItems));
       toast.success("Product added to cart");
       closeModal(false);
