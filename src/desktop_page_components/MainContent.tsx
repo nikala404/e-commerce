@@ -56,7 +56,7 @@ export default function MainContent({ searchQuery }: { searchQuery: string }) {
             })
             .map((product) => (
               <ProductInfo
-              displayActionsModal={true}
+                displayActionsModal={true}
                 key={product.id}
                 product={product}
                 id={product.id.toString()}

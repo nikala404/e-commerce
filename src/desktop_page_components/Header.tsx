@@ -74,7 +74,6 @@ export default function Header({
         <h1>Shop</h1>
         <nav>
           <li onClick={() => navigate("/")}>Home</li>
-          <li onClick={() => navigate("/category")}>Category</li>
         </nav>
         {isSearchVisible ? (
           <SearchContainer>
